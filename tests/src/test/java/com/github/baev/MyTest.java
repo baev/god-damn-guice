@@ -22,10 +22,21 @@ public class MyTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void testName() throws Exception {
+    public void testWithGuice() throws Exception {
         for (int i = 0; i < 100000; i++) {
             try (URLClassLoader classLoader = Aether.aether(mavenSettings()).resolve(artifact).getAsClassLoader()) {
-                Class<?> clazz = classLoader.loadClass("com.github.baev.Main");
+                Class<?> clazz = classLoader.loadClass("com.github.baev.SampleGuiceApplication");
+                Object instance = clazz.newInstance();
+                System.out.println(String.format("%d: %s", i, instance.getClass().getName()));
+            }
+        }
+    }
+
+    @Test
+    public void testWithoutGuice() throws Exception {
+        for (int i = 0; i < 100000; i++) {
+            try (URLClassLoader classLoader = Aether.aether(mavenSettings()).resolve(artifact).getAsClassLoader()) {
+                Class<?> clazz = classLoader.loadClass("com.github.baev.SampleApplication");
                 Object instance = clazz.newInstance();
                 System.out.println(String.format("%d: %s", i, instance.getClass().getName()));
             }
