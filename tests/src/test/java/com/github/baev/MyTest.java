@@ -7,6 +7,7 @@ import org.junit.rules.TemporaryFolder;
 import ru.yandex.qatools.clay.Aether;
 
 import java.net.URLClassLoader;
+import java.util.ResourceBundle;
 
 import static ru.yandex.qatools.allure.report.AllureReportBuilder.mavenSettings;
 
@@ -39,6 +40,7 @@ public class MyTest {
                 Class<?> clazz = classLoader.loadClass("com.github.baev.SampleApplication");
                 Object instance = clazz.newInstance();
                 System.out.println(String.format("%d: %s", i, instance.getClass().getName()));
+                ResourceBundle.clearCache(classLoader);
             }
         }
     }
